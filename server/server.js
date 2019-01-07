@@ -52,6 +52,23 @@ io.on('connection',(socket)=>{
 		}
 	});
 
+	socket.on('entrar', (datos, callback)=>{
+		var text = 'SELECT u_name, u_password FROM usuario WHERE u_name=$1 AND u_password=$2';
+
+		if (datos.nombre !== "" && datos.password !== "") {
+			var values = [datos.nombre, datos.password]; 
+			pool.query(text, values, (err, res) => {
+				if (res.rows[0] == undefined) {
+			    callback('Nombre de usuario o contrasena incorrecta');
+			  } else {
+			    console.log(res.rows[0]);
+			  }
+			});
+		} else{
+			callback('No puede haber campos vacios.');
+		}
+	});
+
 	socket.on('disconnect', ()=>{
 		console.log("cliente desconectado");
 	});
