@@ -1,0 +1,14 @@
+var socket = io();
+
+$('#registro').on('submit', function (e) {
+	e.preventDefault();
+	var datos = {
+		nombre: $('[name=nombre]').val(),
+		password: $('[name=contrasena]').val()
+	};
+	// var nombre = $('[name=nombre]').val();
+	// var con = $('[name=nombre]').val();
+	socket.emit('registro', datos, function (err){
+		alert(err);
+	});
+});
