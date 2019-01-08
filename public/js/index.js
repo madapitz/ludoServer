@@ -1,5 +1,9 @@
 var socket = io();
 
+socket.on('redirect', function(datos){
+	window.location.href = datos.dirc;
+});
+
 $('#registro').on('submit', function (e) {
 	e.preventDefault();
 	var datos = {

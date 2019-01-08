@@ -4,11 +4,13 @@ const express = require("express");
 const socketIO = require("socket.io");
 const { Pool, Client } = require("pg");
 
+const {Users} = require('./utils/users');
 const publicPath = path.join(__dirname, '../public');
 var app = express();
 const port = process.env.PORT || 3000;
 var server = http.createServer(app);
 var io = socketIO(server);
+var users = new Users();
 
 app.use(express.static(publicPath));
 
@@ -44,7 +46,11 @@ io.on('connection',(socket)=>{
 			  if (err) {
 			    callback('El nombre de usuario ya esta en uso');
 			  } else {
-			    console.log(res.rows[0]);
+			  	var redir = {
+			  		dirc:"/partidas.html"
+			  	};
+			  	users.addUser(socket.id, datos.nombre, null);
+			    socket.emit('redirect',redir);
 			  }
 			});
 		} else{
@@ -61,7 +67,11 @@ io.on('connection',(socket)=>{
 				if (res.rows[0] == undefined) {
 			    callback('Nombre de usuario o contrasena incorrecta');
 			  } else {
-			    console.log(res.rows[0]);
+			  	var redir = {
+			  		dirc:"/partidas.html"
+			  	};
+			  	users.addUser(socket.id, datos.nombre, null);
+			    socket.emit('redirect',redir);
 			  }
 			});
 		} else{
@@ -70,7 +80,7 @@ io.on('connection',(socket)=>{
 	});
 
 	socket.on('disconnect', ()=>{
-		console.log("cliente desconectado");
+		users.removeUser(socket.id);
 	});
 });
 
