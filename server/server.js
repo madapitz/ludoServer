@@ -35,6 +35,7 @@ const pool = new Pool({
 //========================================
 
 var room_list = [];
+var players = [];
 
 pool.query('SELECT ro_name FROM room', (err, res) => {
 	if (err) {
@@ -61,10 +62,10 @@ io.on('connection',(socket)=>{
 			    callback('El nombre de usuario ya esta en uso');
 			  } else {
 			  	var redir = {
-			  		dirc:"/partidas.html"
+			  		dirc:"/partidas.html" //quitar
 			  	};
 			  	
-			    socket.emit('redirect',redir);
+			    socket.emit('redirect',redir); //quitar 
 			  }
 			});
 		} else{
@@ -81,7 +82,7 @@ io.on('connection',(socket)=>{
 				if (res.rows[0] == undefined) {
 			    callback('Nombre de usuario o contrasena incorrecta');
 			  } else {
-			  	var redir = {
+			  	var redir = { //Quitar cuando se pruebe para el juego
 			  		dirc:"/partidas.html"
 			  	};
 			  	
@@ -106,6 +107,18 @@ io.on('connection',(socket)=>{
 					var text2 = "UPDATE usuario SET ro_id=$1 WHERE u_id=$2";
 					var values2 = [datos.ro_id, datos.u_id];
 					pool.query(text2, values2);
+
+					var player = {
+						ids:socket.id,
+						idu:datos.u_id,
+						idr:datos.ro_id,
+						x:0,
+						y:0,
+						color:""
+					};
+
+					players.push(player);
+
 					socket.join(ro_id);
 
 				}
@@ -115,10 +128,36 @@ io.on('connection',(socket)=>{
 		}
 	});
 
+	socket.on("nuevaPos", (datos,callback) => {
+		var player = players.find((e) => e.ids == socket.id);
+		if(player !== undefined){
+			var num = players.indexOf(player);
+			players[num].x = datos.x;
+			players[num].y = datos.y;
+		} else{
+			callback("El usuario no se encuentra en la sala");
+		}
+	});
+
+	socket.on("elegirColor", (datos, callback)){
+		var player = players.find((e) => e.ids == socket.id);
+		if(player !== undefined){
+			var num = players.indexOf(player);
+			players[num].color = datos.color;
+		} else {
+			callback("El usuario no se encuentra en la sala");
+		}
+	}
+
 
 
 	socket.on('disconnect', ()=>{
-		
+		var player = players.find((e) => e.ids == socket.id);
+		if(player !== undefined){
+			players = players.filter((e) => e.ids != socket.id);
+			var text = "UPDATE usuario SET ro_id=NULL WHERE u_id=$1";
+			var values = [];
+		}
 	});
 });
 
