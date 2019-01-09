@@ -11,3 +11,5 @@ insert into permiso (p_name) values
 
 insert into rol_per values (1,1), (1,2), (1,3), (1,4), (2,4);
 
+insert into room (ro_name) values ('Sala 1');
+

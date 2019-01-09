@@ -34,6 +34,20 @@ const pool = new Pool({
 //                SOCKETS
 //========================================
 
+var room_list = [];
+
+pool.query('SELECT ro_name FROM room', (err, res) => {
+	if (err) {
+		console.log("error");
+	} else {
+		res.rows.forEach((e) => {
+			room_list.push(e.ro_name);
+		});
+	}
+});
+
+
+
 io.on('connection',(socket)=>{
 
 	socket.on('registro', (datos, callback)=>{
@@ -49,7 +63,7 @@ io.on('connection',(socket)=>{
 			  	var redir = {
 			  		dirc:"/partidas.html"
 			  	};
-			  	users.addUser(socket.id, datos.nombre, null);
+			  	
 			    socket.emit('redirect',redir);
 			  }
 			});
@@ -70,8 +84,9 @@ io.on('connection',(socket)=>{
 			  	var redir = {
 			  		dirc:"/partidas.html"
 			  	};
-			  	users.addUser(socket.id, datos.nombre, null);
-			    socket.emit('redirect',redir);
+			  	
+			  	socket.emit('updateRoomList', room_list);
+			    //socket.emit('redirect',redir);
 			  }
 			});
 		} else{
@@ -79,8 +94,31 @@ io.on('connection',(socket)=>{
 		}
 	});
 
+	socket.on("entrarSala", (datos, callback) => { //se debe pasar el id de la sala
+		var text = 'SELECT count(u_id) FROM usuario u WHERE ro_id=$1';
+
+		if (datos.ro_id >= 1) {
+			var values = [datos.ro_id];
+			pool.query(text, values, (err, res) => {
+				if (parseInt(res.rows[0]) >= 4) {
+					callback("Sala llena");
+				} else {
+					var text2 = "UPDATE usuario SET ro_id=$1 WHERE u_id=$2";
+					var values2 = [datos.ro_id, datos.u_id];
+					pool.query(text2, values2);
+					socket.join(ro_id);
+
+				}
+			});
+		} else {
+			callback("Id de sala no valido");
+		}
+	});
+
+
+
 	socket.on('disconnect', ()=>{
-		users.removeUser(socket.id);
+		
 	});
 });
 

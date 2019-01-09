@@ -19,7 +19,7 @@ class Users {
 		return user;
 	}
 
-	cambiarRoom(id, room){
+	changeRoom(id, room){
 		//se usa el id para buscar al usuario y se cambia el room donde se encuentra
 		var user = this.removeUser(id);
 		if(user){
@@ -36,6 +36,15 @@ class Users {
 		var users = this.users.filter((user) => user.room === room);
 		var namesArray = users.map((user) => user.name);
 		return namesArray;
+	}
+
+	getRoomList(){
+		var rooms = [];
+		this.users.forEach((user)=>{
+			rooms.push(user.room);
+		});
+
+		return rooms;
 	}
 }
 

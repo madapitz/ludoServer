@@ -3,7 +3,14 @@ create table usuario(
 	u_name varchar(20) not null unique,
 	u_password varchar(20) not null,
 	r_id integer,
+	ro_id integer,
 	constraint pk_jugador PRIMARY KEY (u_id)
+);
+
+create table room(
+	ro_id serial,
+	ro_name varchar(20) not null,
+	constraint pk_room PRIMARY KEY (ro_id)
 );
 
 create table rol(
