@@ -52,6 +52,8 @@ pool.query('SELECT ro_name FROM room', (err, res) => {
 io.on('connection',(socket)=>{
 
 	console.log("hello niggas");
+	socket.emit("hola", "my name is nate higgers");
+	
 	socket.on('registro', (datos, callback)=>{
 		var text = 'INSERT INTO usuario(u_name,u_password) VALUES ($1,$2) RETURNING *';
 
