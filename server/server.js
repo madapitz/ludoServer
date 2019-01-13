@@ -270,7 +270,8 @@ io.on('connection',(socket)=>{
 				pos: toString(playerDict[datos.pieza].pos),
 				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
 				nombref: playerDict[datos.pieza].nombref,
-				llego: playerDict[datos.pieza].llego
+				llego: playerDict[datos.pieza].llego,
+				dado: datos.pos
 			};
 
 			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
