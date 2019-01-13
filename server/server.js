@@ -205,7 +205,7 @@ io.on('connection',(socket)=>{
 	socket.on("nuevaPos", (datos,callback) => { //se recibe el nombre de la pieza y el resultado del dado
 		
 		var player = players.find((e) => e.ids == socket.id);
-		var npieza = parseInt(datos.pieza[4]) - 1;
+		var npieza = parseInt(datos.pieza[3]) - 1;
 
 		if(player !== undefined){
 			var num = players.indexOf(player);
