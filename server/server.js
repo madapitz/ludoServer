@@ -112,8 +112,12 @@ io.on('connection',(socket)=>{
 						ids:socket.id,
 						idu:datos.u_id,
 						idr:datos.ro_id,
-						x:0,
-						y:0,
+						pieza:{
+							p1pos:0,
+							p2pos:0,
+							p3pos:0,
+							p4pos:0
+						},
 						color:"",
 						vueltaTabl: false
 					};
@@ -121,6 +125,7 @@ io.on('connection',(socket)=>{
 					players.push(player);
 
 					socket.join(ro_id);
+					socket.to(ro_id).broadcast("actualizarListaUsuarios", JSON.stringify(player));
 
 				}
 			});
@@ -133,12 +138,67 @@ io.on('connection',(socket)=>{
 		var player = players.find((e) => e.ids == socket.id);
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			players[num].x = datos.x;
-			players[num].y = datos.y;
+			if(datos.pieza == 'Red1'){
+				players[num].pos = datos.pieza;
+			}
+			
 
-			socket.to(datos.idr).broadcast("ActualizarPos", player[num]);
+			socket.to(datos.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
 		} else{
 			callback("El usuario no se encuentra en la sala");
+		}
+	});
+
+
+	//rojo 1 verde 14 amarillo 27 azul 40
+	//rojo 52 verde 12 amarillo 25 azul 38
+
+	socket.on("salida", (datos, callback) => {
+		var player = players.find((e) => e.ids == socket.id);
+		if(player !== undefined){
+			var num = players.indexOf(player);
+			if(datos.color == 'rojo'){
+				if (datos.pieza == "Red1") {
+					players[num].pieza.p1pos = 1;
+				} else if (datos.pieza == "Red2") {
+					players[num].pieza.p1pos = 1;
+				} else if (datos.pieza == "Red3") {
+					players[num].pieza.p1pos = 1;
+				} else if (datos.pieza == "Red4") {
+					players[num].pieza.p1pos = 1;
+				}
+			} else if(datos.color == 'verde'){
+				if (datos.pieza == "Red1") {
+					players[num].pieza.p1pos = 14;
+				} else if (datos.pieza == "Red2") {
+					players[num].pieza.p1pos = 14;
+				} else if (datos.pieza == "Red3") {
+					players[num].pieza.p1pos = 14;
+				} else if (datos.pieza == "Red4") {
+					players[num].pieza.p1pos = 14;
+				}
+			} else if(datos.color == 'amarillo'){
+				if (datos.pieza == "Red1") {
+					players[num].pieza.p1pos = 25;
+				} else if (datos.pieza == "Red2") {
+					players[num].pieza.p1pos = 25;
+				} else if (datos.pieza == "Red3") {
+					players[num].pieza.p1pos = 25;
+				} else if (datos.pieza == "Red4") {
+					players[num].pieza.p1pos = 25;
+				} 
+			} else if(datos.color == 'azul'){
+				if (datos.pieza == "Red1") {
+					players[num].pieza.p1pos = 40;
+				} else if (datos.pieza == "Red2") {
+					players[num].pieza.p1pos = 40;
+				} else if (datos.pieza == "Red3") {
+					players[num].pieza.p1pos = 40;
+				} else if (datos.pieza == "Red4") {
+					players[num].pieza.p1pos = 40;
+				}
+			}
+			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
 		}
 	});
 
