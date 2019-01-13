@@ -17,14 +17,23 @@ app.use(express.static(publicPath));
 //========================================
 //                CONEXION BD
 //========================================
+
 const pool = new Pool({
-  user: 'ihxwdhwhkotwpn',
-  host: 'ec2-54-235-77-0.compute-1.amazonaws.com',
-  database: 'decc1692sdtk6q',
-  password: '896e9ab3851d12aab58aebd70156570874cad74c177e58e5d5a08eb1b37145f9',
+  user: 'postgres',
+  host: '127.0.0.1',
+  database: 'ludodb',
+  password: '123456',
   port: 5432,
-  ssl: "require"
-});
+})
+
+// const pool = new Pool({
+//   user: 'ihxwdhwhkotwpn',
+//   host: 'ec2-54-235-77-0.compute-1.amazonaws.com',
+//   database: 'decc1692sdtk6q',
+//   password: '896e9ab3851d12aab58aebd70156570874cad74c177e58e5d5a08eb1b37145f9',
+//   port: 5432,
+//   ssl: "require"
+// });
 
 // pool.query('SELECT * FROM rol', (err, res) => {
 //   console.log(err, res)
