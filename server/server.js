@@ -199,7 +199,7 @@ io.on('connection',(socket)=>{
 
 					playerDict[datos.pieza].pos += datos.pos;
 
-					if(playerDict[datos.pieza].pos >= 12){
+					if(playerDict[datos.pieza].pos == 12){
 						playerDict[datos.pieza].vueltaTabl = true;
 						playerDict[datos.pieza].pos = datos.pos;
 						players[num] = player;
@@ -210,7 +210,7 @@ io.on('connection',(socket)=>{
 
 					playerDict[datos.pieza].pos += datos.pos;
 
-					if(playerDict[datos.pieza].pos >= 25){
+					if(playerDict[datos.pieza].pos == 25){
 						playerDict[datos.pieza].vueltaTabl = true;
 						playerDict[datos.pieza].pos = datos.pos;
 						players[num] = player;
@@ -220,7 +220,7 @@ io.on('connection',(socket)=>{
 
 					playerDict[datos.pieza].pos += datos.pos;
 
-					if(playerDict[datos.pieza].pos >= 38){
+					if(playerDict[datos.pieza].pos == 38){
 						playerDict[datos.pieza].vueltaTabl = true;
 						playerDict[datos.pieza].pos = datos.pos;
 						players[num] = player;
