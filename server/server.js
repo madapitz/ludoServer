@@ -143,21 +143,25 @@ io.on('connection',(socket)=>{
 							p1:{
 								pos:0,
 								vueltaTabl:false,
+								nombref:"red1",
 								llego: false
 							},
 							p2:{
 								pos:0,
 								vueltaTabl:false,
+								nombref:"red2",
 								llego: false
 							},
 							p3:{
 								pos:0,
 								vueltaTabl:false,
+								nombref:"red3",
 								llego: false
 							},
 							p4:{
 								pos:0,
 								vueltaTabl:false,
+								nombref:"red4",
 								llego: false
 							}
 						},
@@ -263,7 +267,7 @@ io.on('connection',(socket)=>{
 			
 			
 
-			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
+			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(playerDict[datos.pieza]));
 		} else{
 			callback("El usuario no se encuentra en la sala");
 		}
@@ -300,7 +304,7 @@ io.on('connection',(socket)=>{
 
 			players[num] = player;
 
-			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
+			ssocket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(playerDict[datos.pieza]));
 		} else{
 			callback("Error");
 		}
