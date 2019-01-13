@@ -299,6 +299,9 @@ io.on('connection',(socket)=>{
 			player.pieza.p3,
 			player.pieza.p4
 		];
+
+		console.log(datos);
+
 		if(player !== undefined){
 			var num = players.indexOf(player);
 			playerDict[parseInt(datos.pieza)].pos = 1;
