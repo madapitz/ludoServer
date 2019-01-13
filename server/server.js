@@ -175,18 +175,24 @@ io.on('connection',(socket)=>{
 						gano: false
 					};
 
+
+					if(players[0] == undefined){
+						player.color = 'rojo';
+					}
+
 					players.forEach((p) => {
-						if(p.color != 'rojo'){
+						if(p.color != 'rojo' && p.idr == datos.ro_id){
 							player.color = 'rojo';
-						} else if(p.color != 'verde'){
+						} else if(p.color != 'verde' && p.idr == datos.ro_id){
 							player.color = 'verde';
-						} else if(p.color != 'amarillo'){
+						} else if(p.color != 'amarillo' && p.idr == datos.ro_id){
 							player.color = 'amarillo';
-						} else if(p.color != 'azul'){
+						} else if(p.color != 'azul' && p.idr == datos.ro_id){
 							player.color = 'azul';
 						}
 					});
 
+					console.log(player);
 					players.push(player);
 					//console.log(players);
 

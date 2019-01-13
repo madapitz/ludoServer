@@ -5,7 +5,9 @@ socket.on('redirect', function(datos){
 });
 
 // socket.emit("entrarSala", {ro_id:1,u_id:1}, function(){socket.emit("salida", {pieza:'red1',pos:1});});
-
+// socket.emit('entrarSala', {ro_id:1,u_id:1}, function(){
+// 	console.log('1');
+// });
 
 // socket.on('updateUserList', function(users){
 //   var ol = $('<ol></ol>');
