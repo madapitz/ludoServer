@@ -293,15 +293,15 @@ io.on('connection',(socket)=>{
 	socket.on("salida", (datos, callback) => {
 		
 		var player = players.find((e) => e.ids == socket.id);
-		var playerDict = {
-			"red1":player.pieza.p1,
-			"red2":player.pieza.p2,
-			"red3":player.pieza.p3,
-			"red4":player.pieza.p4
-		};
+		var playerDict = [
+			player.pieza.p1,
+			player.pieza.p2,
+			player.pieza.p3,
+			player.pieza.p4
+		];
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			playerDict[datos.pieza].pos = 1;
+			playerDict[parseInt(datos.pieza)].pos = 1;
 			if(player.color == 'rojo'){
 
 				playerDict[datos.pieza].pos = 1;
@@ -320,10 +320,10 @@ io.on('connection',(socket)=>{
 			players[num] = player;
 
 			var afuera = {
-				pos: toString(playerDict[datos.pieza].pos),
-				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
-				nombref: playerDict[datos.pieza].nombref,
-				llego: playerDict[datos.pieza].llego
+				pos: toString(playerDict[parseInt(datos.pieza)].pos),
+				vueltaTabl: playerDict[parseInt(datos.pieza)].vueltaTabl,
+				nombref: playerDict[parseInt(datos.pieza)].nombref,
+				llego: playerDict[parseInt(datos.pieza)].llego
 			};
 
 			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
