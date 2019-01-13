@@ -176,8 +176,8 @@ io.on('connection',(socket)=>{
 
 					players.push(player);
 
-					socket.join(datos.ro_id);
-					socket.to(datos.ro_id).broadcast("actualizarListaUsuarios", JSON.stringify(player));
+					socket.join(toString(datos.ro_id));
+					socket.broadcast.to(toString(datos.ro_id)).emit("actualizarListaUsuarios", JSON.stringify(player));
 
 				}
 			});
