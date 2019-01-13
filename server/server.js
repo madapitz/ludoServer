@@ -22,7 +22,7 @@ const connectionString = "postgres://ihxwdhwhkotwpn:896e9ab3851d12aab58aebd70156
 
 const pool = new Pool({
 	connectionString:connectionString,
-	ssl: true,
+	ssl: "require",
 });
 
 // const pool = new Pool({
@@ -70,7 +70,7 @@ io.on('connection',(socket)=>{
 
 	console.log(port);
 
-	socket.on("hola", "Nate Higgers");
+	socket.emit("hola", "Nate Higgers");
 
 	socket.on('registro', (datos, callback)=>{
 		var text = 'INSERT INTO usuario(u_name,u_password) VALUES ($1,$2) RETURNING *';
