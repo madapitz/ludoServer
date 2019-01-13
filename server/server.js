@@ -301,6 +301,7 @@ io.on('connection',(socket)=>{
 		};
 		if(player !== undefined){
 			var num = players.indexOf(player);
+			playerDict[datos.pieza].pos = 1;
 			if(player.color == 'rojo'){
 
 				playerDict[datos.pieza].pos = 1;
@@ -325,7 +326,7 @@ io.on('connection',(socket)=>{
 				llego: playerDict[datos.pieza].llego
 			};
 
-			ssocket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
+			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
 		} else{
 			callback("Error");
 		}
