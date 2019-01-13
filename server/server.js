@@ -266,8 +266,14 @@ io.on('connection',(socket)=>{
 		}
 			
 			
+			var afuera = {
+				pos: toString(playerDict[datos.pieza].pos),
+				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
+				nombref: playerDict[datos.pieza].nombref,
+				llego: playerDict[datos.pieza].llego
+			};
 
-			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(playerDict[datos.pieza]));
+			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
 		} else{
 			callback("El usuario no se encuentra en la sala");
 		}
@@ -304,7 +310,14 @@ io.on('connection',(socket)=>{
 
 			players[num] = player;
 
-			ssocket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(playerDict[datos.pieza]));
+			var afuera = {
+				pos: toString(playerDict[datos.pieza].pos),
+				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
+				nombref: playerDict[datos.pieza].nombref,
+				llego: playerDict[datos.pieza].llego
+			};
+
+			ssocket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
 		} else{
 			callback("Error");
 		}
