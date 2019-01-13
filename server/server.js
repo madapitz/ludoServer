@@ -300,6 +300,7 @@ io.on('connection',(socket)=>{
 			'red4':player.pieza.p4
 		};
 
+		console.log(playerDict['red1']);
 		console.log(datos);
 
 		if(player !== undefined){
@@ -323,10 +324,10 @@ io.on('connection',(socket)=>{
 			players[num] = player;
 
 			var afuera = {
-				pos: toString(playerDict[parseInt(datos.pieza)].pos),
-				vueltaTabl: playerDict[parseInt(datos.pieza)].vueltaTabl,
-				nombref: playerDict[parseInt(datos.pieza)].nombref,
-				llego: playerDict[parseInt(datos.pieza)].llego
+				pos: toString(playerDict[datos.pieza].pos),
+				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
+				nombref: playerDict[datos.pieza].nombref,
+				llego: playerDict[datos.pieza].llego
 			};
 
 			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
