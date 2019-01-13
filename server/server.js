@@ -18,13 +18,20 @@ app.use(express.static(publicPath));
 //                CONEXION BD
 //========================================
 
+const connectionString = "postgres://ihxwdhwhkotwpn:896e9ab3851d12aab58aebd70156570874cad74c177e58e5d5a08eb1b37145f9@ec2-54-235-77-0.compute-1.amazonaws.com:5432/decc1692sdtk6q";
+
 const pool = new Pool({
-  user: 'postgres',
-  host: '127.0.0.1',
-  database: 'ludodb',
-  password: '123456',
-  port: 5432,
-})
+	connectionString:connectionString,
+	ssl: true,
+});
+
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: '127.0.0.1',
+//   database: 'ludodb',
+//   password: '123456',
+//   port: 5432,
+// })
 
 // const pool = new Pool({
 //   user: 'ihxwdhwhkotwpn',
@@ -49,7 +56,7 @@ var players = [];
 
 pool.query('SELECT ro_name FROM room', (err, res) => {
 	if (err) {
-		console.log("error");
+		console.log(err);
 	} else {
 		res.rows.forEach((e) => {
 			room_list.push(e.ro_name);
