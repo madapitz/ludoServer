@@ -135,10 +135,13 @@ io.on('connection',(socket)=>{
 			var num = players.indexOf(player);
 			players[num].x = datos.x;
 			players[num].y = datos.y;
+
+			socket.to(datos.idr).broadcast("ActualizarPos", player[num]);
 		} else{
 			callback("El usuario no se encuentra en la sala");
 		}
 	});
+
 
 	socket.on("elegirColor", (datos, callback) => {
 		var player = players.find((e) => e.ids == socket.id);
