@@ -23,8 +23,8 @@ const pool = new Pool({
   database: 'decc1692sdtk6q',
   password: '896e9ab3851d12aab58aebd70156570874cad74c177e58e5d5a08eb1b37145f9',
   port: 5432,
-  ssl: true
-})
+  ssl: "required"
+});
 
 // pool.query('SELECT * FROM rol', (err, res) => {
 //   console.log(err, res)
