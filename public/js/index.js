@@ -4,6 +4,8 @@ socket.on('redirect', function(datos){
 	window.location.href = datos.dirc;
 });
 
+// socket.emit("entrarSala", {ro_id:1,u_id:1}, function(){socket.emit("salida", {pieza:'red1',pos:1});});
+
 
 // socket.on('updateUserList', function(users){
 //   var ol = $('<ol></ol>');

@@ -132,6 +132,7 @@ io.on('connection',(socket)=>{
 				if (parseInt(res.rows[0]) >= 4) {
 					callback("Sala llena");
 				} else {
+
 					var text2 = "UPDATE usuario SET ro_id=$1 WHERE u_id=$2";
 					var values2 = [datos.ro_id, datos.u_id];
 					pool.query(text2, values2, (err, res) => {
@@ -144,40 +145,43 @@ io.on('connection',(socket)=>{
 						ids:socket.id,
 						idu:datos.u_id,
 						idr:datos.ro_id,
-						pieza:{
-							p1:{
+						pieza:[
+							{
 								pos:0,
 								vueltaTabl:false,
 								nombref:"red1",
 								llego: false
 							},
-							p2:{
+							{
 								pos:0,
 								vueltaTabl:false,
 								nombref:"red2",
 								llego: false
 							},
-							p3:{
+							{
 								pos:0,
 								vueltaTabl:false,
 								nombref:"red3",
 								llego: false
 							},
-							p4:{
+							{
 								pos:0,
 								vueltaTabl:false,
 								nombref:"red4",
 								llego: false
 							}
-						},
+						],
 						color:"",
 						gano: false
 					};
 
 					players.push(player);
+					//console.log(players);
 
 					socket.join(toString(datos.ro_id));
 					socket.broadcast.to(toString(datos.ro_id)).emit("actualizarListaUsuarios", JSON.stringify(player));
+
+					callback();
 
 				}
 			});
@@ -189,98 +193,96 @@ io.on('connection',(socket)=>{
 	socket.on("nuevaPos", (datos,callback) => { //se recibe el nombre de la pieza y el resultado del dado
 		
 		var player = players.find((e) => e.ids == socket.id);
-		var playerDict = {
-			"red1":player.pieza.p1,
-			"red2":player.pieza.p2,
-			"red3":player.pieza.p3,
-			"red4":player.pieza.p4
-		};
+		var npieza = parseInt(datos.pieza[4]) - 1;
+
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			if(player.pos < 52 && playerDict[datos.pieza].vueltaTabl == false){
+			if(player.pieza[npieza].pos < 52 && player.pieza[npieza].vueltaTabl == false){
 
 				if(player.color == 'rojo'){
-					playerDict[datos.pieza].pos += datos.pos;
+					player.pieza[npieza].pos += datos.pos;
 				} else if(player.color == 'verde'){
 
-					playerDict[datos.pieza].pos += datos.pos;
+					player.pieza[npieza].pos += datos.pos;
 
-					if(playerDict[datos.pieza].pos == 12){
-						playerDict[datos.pieza].vueltaTabl = true;
-						playerDict[datos.pieza].pos = datos.pos;
+					if(player.pieza[npieza].pos == 12){
+						player.pieza[npieza].vueltaTabl = true;
+						player.pieza[npieza].pos = datos.pos;
 						players[num] = player;
 					}
 
 					
 				} else if(player.color == 'azul'){
 
-					playerDict[datos.pieza].pos += datos.pos;
+					player.pieza[npieza].pos += datos.pos;
 
-					if(playerDict[datos.pieza].pos == 25){
-						playerDict[datos.pieza].vueltaTabl = true;
-						playerDict[datos.pieza].pos = datos.pos;
+					if(player.pieza[npieza].pos == 25){
+						player.pieza[npieza].vueltaTabl = true;
+						player.pieza[npieza].pos = datos.pos;
 						players[num] = player;
 					}
 
 				} else if(player.color == 'amarillo'){
 
-					playerDict[datos.pieza].pos += datos.pos;
+					player.pieza[npieza].pos += datos.pos;
 
-					if(playerDict[datos.pieza].pos == 38){
-						playerDict[datos.pieza].vueltaTabl = true;
-						playerDict[datos.pieza].pos = datos.pos;
+					if(player.pieza[npieza].pos == 38){
+						player.pieza[npieza].vueltaTabl = true;
+						player.pieza[npieza].pos = datos.pos;
 						players[num] = player;
 					}
 
 					
 				
-			} else if(player.pos >= 52 && playerDict[datos.pieza].vueltaTabl == false){
+			} else if(player.pieza[npieza].pos >= 52 && player.pieza[npieza].vueltaTabl == false){
 				if(player.color == 'rojo'){
 
-					playerDict[pieza].vueltaTabl = true;
-					playerDict[datos.pieza].pos = datos.pos;
+					player.pieza[npieza].vueltaTabl = true;
+					player.pieza[npieza].pos = datos.pos;
 					players[num] = player;
 					
 				} else {
 
-					playerDict[datos.pieza].pos += datos.pos - 51;
+					player.pieza[npieza].pos += datos.pos - 51;
 					players[num] = player;
 				} 
-			}  else if(playerDict[datos.pieza].vueltaTabl == true) {
-					var pos = parseInt(playerDict[pieza].pos) + datos.pos;
+			}  else if(player.pieza[npieza].vueltaTabl == true) {
+					var pos = parseInt(player.pieza[npieza].pos) + datos.pos;
 
 					if(pos === 5){
-						playerDict[datos.pieza].llego = true;
+						player.pieza[npieza].llego = true;
 					} else if (pos > 5){
 						pos -= 5;
 					}
 
-					if(!playerDict[datos.pieza].llego){
+					if(!player.pieza[npieza].llego){
 						if(player.color == "rojo"){
 
-							playerDict[pieza].pos = "red" + toString(pos);
+							player.pieza[npieza].pos = "red" + toString(pos);
 						} else if(player.color == "verde"){
-							playerDict[pieza].pos = "green" + toString(pos);
+							player.pieza[npieza].pos = "green" + toString(pos);
 						} else if(player.color == "azul"){
-							playerDict[pieza].pos = "blue" + toString(pos);
+							player.pieza[npieza].pos = "blue" + toString(pos);
 						} else if(player.color == "amarillo"){
-							playerDict[pieza].pos = "yellow" + toString(pos);
+							player.pieza[npieza].pos = "yellow" + toString(pos);
 						}
 					}
-					players[num] = player;
+					
 			}
 		}
 			
+			players[num] = player;
 			
 			var afuera = {
-				pos: toString(playerDict[datos.pieza].pos),
-				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
-				nombref: playerDict[datos.pieza].nombref,
-				llego: playerDict[datos.pieza].llego,
+				pos: toString(player.pieza[npieza].pos),
+				vueltaTabl: player.pieza[npieza].vueltaTabl,
+				nombref: player.pieza[npieza].nombref,
+				llego: player.pieza[npieza].llego,
 				dado: datos.pos
 			};
 
-			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
+			socket.broadcast.to(player.idr).emit("ActualizarPos", JSON.stringify(afuera));
+
 		} else{
 			callback("El usuario no se encuentra en la sala");
 		}
@@ -292,45 +294,64 @@ io.on('connection',(socket)=>{
 
 	socket.on("salida", (datos, callback) => {
 		
-		var player = players.find((e) => e.ids == socket.id);
-		var playerDict = {
-			'red1':player.pieza.p1,
-			'red2':player.pieza.p2,
-			'red3':player.pieza.p3,
-			'red4':player.pieza.p4
-		};
-
-		console.log(playerDict['red1']);
-		console.log(datos);
-
+		var player = players.find(e => e.ids == socket.id);
+		
+		
+		var npieza = parseInt(datos.pieza[3]) - 1;
+		
+		
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			playerDict[parseInt(datos.pieza)].pos = 1;
+			
+			var valor = 0;
+			
+			console.log(player.pieza.p1);
 			if(player.color == 'rojo'){
 
-				playerDict[datos.pieza].pos = 1;
+				valor = 1;
 
 			} else if(player.color == 'verde'){
-				playerDict[datos.pieza].pos = 14;
+				valor = 14;
 				
 			
 			} else if(player.color == 'amarillo'){
-				playerDict[datos.pieza].pos = 25;
+				valor = 25;
 
 			} else if(player.color == 'azul'){
-				playerDict[datos.pieza].pos = 40;
+				valor = 40;
 			}
 
+			// if (npieza == 1) {
+			// 	player.pieza.p1.pos = valor;
+			// } else if (npieza == 2) {
+			// 	player.pieza.p2.pos = valor;
+			// } else if (npieza == 3) {
+			// 	player.pieza.p3.pos = valor;
+			// } else if (npieza == 4) {
+			// 	player.pieza.p4.pos = valor;
+			// } 
+
+			if (npieza == 1) {
+				player.pieza[0].pos = valor;
+			} else if (npieza == 2) {
+				player.pieza[1].pos = valor;
+			} else if (npieza == 3) {
+				player.pieza[2].pos = valor;
+			} else if (npieza == 4) {
+				player.pieza[3].pos = valor;
+			} 
+
 			players[num] = player;
+			console.log(player.pieza[0])
 
 			var afuera = {
-				pos: toString(playerDict[datos.pieza].pos),
-				vueltaTabl: playerDict[datos.pieza].vueltaTabl,
-				nombref: playerDict[datos.pieza].nombref,
-				llego: playerDict[datos.pieza].llego
+				pos: toString(valor),
+				vueltaTabl: false,
+				nombref: datos.pieza,
+				llego: false
 			};
 
-			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(afuera));
+			socket.broadcast.to(player.idr).emit("ActualizarPos", JSON.stringify(afuera));
 		} else{
 			callback("Error");
 		}
