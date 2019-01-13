@@ -114,7 +114,8 @@ io.on('connection',(socket)=>{
 						idr:datos.ro_id,
 						x:0,
 						y:0,
-						color:""
+						color:"",
+						vueltaTabl: false
 					};
 
 					players.push(player);
@@ -139,7 +140,7 @@ io.on('connection',(socket)=>{
 		}
 	});
 
-	socket.on("elegirColor", (datos, callback)){
+	socket.on("elegirColor", (datos, callback) => {
 		var player = players.find((e) => e.ids == socket.id);
 		if(player !== undefined){
 			var num = players.indexOf(player);
@@ -147,7 +148,7 @@ io.on('connection',(socket)=>{
 		} else {
 			callback("El usuario no se encuentra en la sala");
 		}
-	}
+	});
 
 
 
