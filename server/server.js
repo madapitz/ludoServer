@@ -293,12 +293,12 @@ io.on('connection',(socket)=>{
 	socket.on("salida", (datos, callback) => {
 		
 		var player = players.find((e) => e.ids == socket.id);
-		var playerDict = [
-			player.pieza.p1,
-			player.pieza.p2,
-			player.pieza.p3,
-			player.pieza.p4
-		];
+		var playerDict = {
+			'red1':player.pieza.p1,
+			'red2':player.pieza.p2,
+			'red3':player.pieza.p3,
+			'red4':player.pieza.p4
+		};
 
 		console.log(datos);
 
