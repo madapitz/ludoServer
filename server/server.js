@@ -188,6 +188,7 @@ io.on('connection',(socket)=>{
 		if(player !== undefined){
 			var num = players.indexOf(player);
 			if(player.pos < 52 && playerDict[datos.pieza].vueltaTabl == false){
+
 				if(player.color == 'rojo'){
 					playerDict[datos.pieza].pos += datos.pos;
 				} else if(player.color == 'verde'){
@@ -196,6 +197,7 @@ io.on('connection',(socket)=>{
 
 					if(playerDict[datos.pieza].pos >= 12){
 						playerDict[datos.pieza].vueltaTabl = true;
+						playerDict[datos.pieza].pos = datos.pos;
 						players[num] = player;
 					}
 
@@ -206,6 +208,7 @@ io.on('connection',(socket)=>{
 
 					if(playerDict[datos.pieza].pos >= 25){
 						playerDict[datos.pieza].vueltaTabl = true;
+						playerDict[datos.pieza].pos = datos.pos;
 						players[num] = player;
 					}
 
@@ -215,6 +218,7 @@ io.on('connection',(socket)=>{
 
 					if(playerDict[datos.pieza].pos >= 38){
 						playerDict[datos.pieza].vueltaTabl = true;
+						playerDict[datos.pieza].pos = datos.pos;
 						players[num] = player;
 					}
 
@@ -224,7 +228,7 @@ io.on('connection',(socket)=>{
 				if(player.color == 'rojo'){
 
 					playerDict[pieza].vueltaTabl = true;
-					playerDict[datos.pieza].pos += datos.pos - 51;
+					playerDict[datos.pieza].pos = datos.pos;
 					players[num] = player;
 					
 				} else {
