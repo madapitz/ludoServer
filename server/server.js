@@ -287,19 +287,19 @@ io.on('connection',(socket)=>{
 		};
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			if(datos.color == 'rojo'){
+			if(player.color == 'rojo'){
 
-				playerDict[pieza].pos = 1;
+				playerDict[datos.pieza].pos = 1;
 
-			} else if(datos.color == 'verde'){
-				playerDict[pieza].pos = 14;
+			} else if(player.color == 'verde'){
+				playerDict[datos.pieza].pos = 14;
 				
 			
-			} else if(datos.color == 'amarillo'){
-				playerDict[pieza].pos = 25;
+			} else if(player.color == 'amarillo'){
+				playerDict[datos.pieza].pos = 25;
 
-			} else if(datos.color == 'azul'){
-				playerDict[pieza].pos = 40;
+			} else if(player.color == 'azul'){
+				playerDict[datos.pieza].pos = 40;
 			}
 
 			players[num] = player;
