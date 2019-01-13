@@ -74,6 +74,7 @@ io.on('connection',(socket)=>{
 
 	socket.on("holis", (datos) => {
 		console.log(datos);
+		socket.emit("hola", "Nate Higgers");
 	});
 
 	socket.on('registro', (datos, callback)=>{
