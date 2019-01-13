@@ -51,6 +51,7 @@ pool.query('SELECT ro_name FROM room', (err, res) => {
 
 io.on('connection',(socket)=>{
 
+	console.log("hello niggas");
 	socket.on('registro', (datos, callback)=>{
 		var text = 'INSERT INTO usuario(u_name,u_password) VALUES ($1,$2) RETURNING *';
 
@@ -138,12 +139,12 @@ io.on('connection',(socket)=>{
 		var player = players.find((e) => e.ids == socket.id);
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			if(datos.pieza == 'Red1'){
+			if(player.color == 'Red1'){
 				players[num].pos = datos.pieza;
 			}
 			
 
-			socket.to(datos.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
+			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
 		} else{
 			callback("El usuario no se encuentra en la sala");
 		}
@@ -199,6 +200,8 @@ io.on('connection',(socket)=>{
 				}
 			}
 			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
+		} else{
+			callback("Error");
 		}
 	});
 
