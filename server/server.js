@@ -175,6 +175,18 @@ io.on('connection',(socket)=>{
 						gano: false
 					};
 
+					players.forEach((p) => {
+						if(p.color != 'rojo'){
+							player.color = 'rojo';
+						} else if(p.color != 'verde'){
+							player.color = 'verde';
+						} else if if(p.color != 'amarillo'){
+							player.color = 'amarillo';
+						} else if(p.color != 'azul'){
+							player.color = 'azul';
+						}
+					});
+
 					players.push(player);
 					//console.log(players);
 
