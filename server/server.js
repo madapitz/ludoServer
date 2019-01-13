@@ -134,7 +134,11 @@ io.on('connection',(socket)=>{
 				} else {
 					var text2 = "UPDATE usuario SET ro_id=$1 WHERE u_id=$2";
 					var values2 = [datos.ro_id, datos.u_id];
-					pool.query(text2, values2);
+					pool.query(text2, values2, (err, res) => {
+						if (err){
+							console.log(err);
+						}
+					});
 
 					var player = {
 						ids:socket.id,
