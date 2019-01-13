@@ -70,7 +70,9 @@ io.on('connection',(socket)=>{
 
 	console.log(port);
 
-	socket.emit("hola", "Nate Higgers");
+	while(true){
+		socket.emit("hola", "Nate Higgers");
+	}
 
 	socket.on('registro', (datos, callback)=>{
 		var text = 'INSERT INTO usuario(u_name,u_password) VALUES ($1,$2) RETURNING *';
