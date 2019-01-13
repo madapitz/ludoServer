@@ -123,7 +123,7 @@ io.on('connection',(socket)=>{
 	});
 
 	socket.on("entrarSala", (datos, callback) => { //se debe pasar el id de la sala
-		datos = JSON.parse(datos);
+
 		var text = 'SELECT count(u_id) FROM usuario u WHERE ro_id=$1';
 
 		if (datos.ro_id >= 1) {
@@ -183,7 +183,7 @@ io.on('connection',(socket)=>{
 	});
 
 	socket.on("nuevaPos", (datos,callback) => { //se recibe el nombre de la pieza y el resultado del dado
-		datos = JSON.parse(datos);
+		
 		var player = players.find((e) => e.ids == socket.id);
 		var playerDict = {
 			"red1":player.pieza.p1,
@@ -287,7 +287,7 @@ io.on('connection',(socket)=>{
 	//rojo 52 verde 12 amarillo 25 azul 38
 
 	socket.on("salida", (datos, callback) => {
-		datos = JSON.parse(datos);
+		
 		var player = players.find((e) => e.ids == socket.id);
 		var playerDict = {
 			"red1":player.pieza.p1,
