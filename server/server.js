@@ -51,9 +51,7 @@ pool.query('SELECT ro_name FROM room', (err, res) => {
 
 io.on('connection',(socket)=>{
 
-	console.log("hello niggas");
-	socket.emit("hola", "my name is nate higgers");
-	
+
 	socket.on('registro', (datos, callback)=>{
 		var text = 'INSERT INTO usuario(u_name,u_password) VALUES ($1,$2) RETURNING *';
 
@@ -141,8 +139,103 @@ io.on('connection',(socket)=>{
 		var player = players.find((e) => e.ids == socket.id);
 		if(player !== undefined){
 			var num = players.indexOf(player);
-			if(player.color == 'Red1'){
-				players[num].pos = datos.pieza;
+			if(datos.pos < 52){
+				if(player.color == 'rojo'){
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos;
+					}
+				} else if(player.color == 'verde'){
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos;
+					}
+				} else if(player.color == 'azul'){
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos;
+					}
+				} else if(player.color == 'amarillo'){
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos;
+					}
+				}
+			} else {
+				if(player.color == 'rojo'){
+
+					players[num].vueltaTabl = true;
+
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos -51;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos -51;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos -51;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos -51;
+					}
+				} else if(player.color == 'verde'){
+
+					if(datos.pos - 51 >= 12){players[num].vueltaTabl = true;}
+
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos - 51;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos - 51;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos - 51;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos - 51;
+					}
+				} else if(player.color == 'azul'){
+
+					if(datos.pos - 51 >= 25){players[num].vueltaTabl = true;}
+
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos - 51;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos - 51;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos - 51;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos - 51;
+					}
+				} else if(player.color == 'amarillo'){
+
+					if(datos.pos - 51 >= 12){players[num].vueltaTabl = true;}
+
+					if (datos.pieza == 'red1') {
+						players[num].pieza.p1pos += datos.pos - 51;
+					} else if (datos.pieza == 'red2') {
+						players[num].pieza.p2pos += datos.pos - 51;
+					} else if (datos.pieza == 'red3') {
+						players[num].pieza.p3pos += datos.pos - 51;
+					} else if (datos.pieza == 'red4') {
+						players[num].pieza.p4pos += datos.pos - 51;
+					}
+				}
+
 			}
 			
 
@@ -164,41 +257,41 @@ io.on('connection',(socket)=>{
 				if (datos.pieza == "Red1") {
 					players[num].pieza.p1pos = 1;
 				} else if (datos.pieza == "Red2") {
-					players[num].pieza.p1pos = 1;
+					players[num].pieza.p2pos = 1;
 				} else if (datos.pieza == "Red3") {
-					players[num].pieza.p1pos = 1;
+					players[num].pieza.p3pos = 1;
 				} else if (datos.pieza == "Red4") {
-					players[num].pieza.p1pos = 1;
+					players[num].pieza.p4pos = 1;
 				}
 			} else if(datos.color == 'verde'){
 				if (datos.pieza == "Red1") {
 					players[num].pieza.p1pos = 14;
 				} else if (datos.pieza == "Red2") {
-					players[num].pieza.p1pos = 14;
+					players[num].pieza.p2pos = 14;
 				} else if (datos.pieza == "Red3") {
-					players[num].pieza.p1pos = 14;
+					players[num].pieza.p3pos = 14;
 				} else if (datos.pieza == "Red4") {
-					players[num].pieza.p1pos = 14;
+					players[num].pieza.p4pos = 14;
 				}
 			} else if(datos.color == 'amarillo'){
 				if (datos.pieza == "Red1") {
 					players[num].pieza.p1pos = 25;
 				} else if (datos.pieza == "Red2") {
-					players[num].pieza.p1pos = 25;
+					players[num].pieza.p2pos = 25;
 				} else if (datos.pieza == "Red3") {
-					players[num].pieza.p1pos = 25;
+					players[num].pieza.p3pos = 25;
 				} else if (datos.pieza == "Red4") {
-					players[num].pieza.p1pos = 25;
+					players[num].pieza.p4pos = 25;
 				} 
 			} else if(datos.color == 'azul'){
 				if (datos.pieza == "Red1") {
 					players[num].pieza.p1pos = 40;
 				} else if (datos.pieza == "Red2") {
-					players[num].pieza.p1pos = 40;
+					players[num].pieza.p2pos = 40;
 				} else if (datos.pieza == "Red3") {
-					players[num].pieza.p1pos = 40;
+					players[num].pieza.p3pos = 40;
 				} else if (datos.pieza == "Red4") {
-					players[num].pieza.p1pos = 40;
+					players[num].pieza.p4pos = 40;
 				}
 			}
 			socket.to(player.idr).broadcast("ActualizarPos", JSON.stringify(player[num]));
