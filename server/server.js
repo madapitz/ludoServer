@@ -301,7 +301,7 @@ io.on('connection',(socket)=>{
 				dado: datos.pos
 			};
 
-			socket.emit("ActualizarPos", JSON.stringify(afuera));
+			socket.emit("ActualizarPos", afuera);
 
 		} else{
 			callback("El usuario no se encuentra en la sala");
@@ -373,7 +373,7 @@ io.on('connection',(socket)=>{
 
 			console.log(afuera);
 
-			socket.emit("ActualizarPos", JSON.stringify(afuera));
+			socket.emit("ActualizarPos", afuera);
 		} else{
 			callback("Error");
 		}
