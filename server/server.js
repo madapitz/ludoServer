@@ -204,7 +204,7 @@ io.on('connection',(socket)=>{
 
 					socket.join(toString(datos.ro_id));
 					socket.emit("actualizarListaUsuarios", player);
-					socket.broadcast.emit("actualizarListaUsuarios", player);
+					//socket.broadcast.emit("actualizarListaUsuarios", player);
 
 					callback();
 
