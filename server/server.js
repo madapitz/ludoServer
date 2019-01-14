@@ -197,7 +197,7 @@ io.on('connection',(socket)=>{
 					//console.log(players);
 
 					socket.join(toString(datos.ro_id));
-					socket.broadcast.to(toString(datos.ro_id)).emit("actualizarListaUsuarios", JSON.stringify(player));
+					socket.emit("actualizarListaUsuarios", JSON.stringify(player));
 
 					callback();
 
@@ -301,7 +301,7 @@ io.on('connection',(socket)=>{
 				dado: datos.pos
 			};
 
-			socket.broadcast.to(toString(player.idr)).emit("ActualizarPos", JSON.stringify(afuera));
+			socket.emit("ActualizarPos", JSON.stringify(afuera));
 
 		} else{
 			callback("El usuario no se encuentra en la sala");
@@ -373,7 +373,7 @@ io.on('connection',(socket)=>{
 
 			console.log(afuera);
 
-			socket.broadcast.to(toString(player.idr)).emit("ActualizarPos", JSON.stringify(afuera));
+			socket.emit("ActualizarPos", JSON.stringify(afuera));
 		} else{
 			callback("Error");
 		}
