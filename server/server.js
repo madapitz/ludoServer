@@ -216,14 +216,7 @@ io.on('connection',(socket)=>{
 
 		datos.pos = parseInt(datos.pos);
 		console.log(datos.pos);
-		var oldPos = player.pieza[npieza].pos;
-		var newPos = player.pieza[npieza].pos + datos.pos;
-
-		var posArray = [];
-
-		for (var i = oldPos ; i <= newPos; i++) {
-			posArray.push(i);
-		}
+		
 
 
 		if(player !== undefined && datos !== null){
@@ -301,6 +294,15 @@ io.on('connection',(socket)=>{
 					}
 					
 			}
+		}
+
+		var oldPos = player.pieza[npieza].pos;
+		var newPos = player.pieza[npieza].pos + datos.pos;
+
+		var posArray = [];
+
+		for (var i = oldPos ; i <= newPos; i++) {
+			posArray.push(i);
 		}
 			
 		players[num] = player;
