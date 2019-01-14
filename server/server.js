@@ -258,7 +258,7 @@ io.on('connection',(socket)=>{
 					}
 
 					
-				
+			}	
 		} else if(player.pieza[npieza].pos + datos.pos >= 52 && player.pieza[npieza].vueltaTabl == false){
 				if(player.color == 'red'){
 
