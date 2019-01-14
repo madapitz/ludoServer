@@ -301,7 +301,7 @@ io.on('connection',(socket)=>{
 				dado: datos.pos
 			};
 
-			socket.broadcast.to(player.idr).emit("ActualizarPos", JSON.stringify(afuera));
+			socket.broadcast.to(toString(player.idr)).emit("ActualizarPos", JSON.stringify(afuera));
 
 		} else{
 			callback("El usuario no se encuentra en la sala");
@@ -362,7 +362,7 @@ io.on('connection',(socket)=>{
 			} 
 
 			players[num] = player;
-			console.log(player.pieza[0])
+			
 
 			var afuera = {
 				pos: toString(valor),
@@ -371,7 +371,9 @@ io.on('connection',(socket)=>{
 				llego: false
 			};
 
-			socket.broadcast.to(player.idr).emit("ActualizarPos", JSON.stringify(afuera));
+			console.log(afuera);
+
+			socket.broadcast.to(toString(player.idr)).emit("ActualizarPos", JSON.stringify(afuera));
 		} else{
 			callback("Error");
 		}
