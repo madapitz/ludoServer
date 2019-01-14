@@ -177,18 +177,18 @@ io.on('connection',(socket)=>{
 
 
 					if(players[0] == undefined){
-						player.color = 'rojo';
+						player.color = 'red';
 					}
 
 					players.forEach((p) => {
-						if(p.color != 'rojo' && p.idr == datos.ro_id){
-							player.color = 'rojo';
-						} else if(p.color != 'verde' && p.idr == datos.ro_id){
-							player.color = 'verde';
-						} else if(p.color != 'amarillo' && p.idr == datos.ro_id){
-							player.color = 'amarillo';
-						} else if(p.color != 'azul' && p.idr == datos.ro_id){
-							player.color = 'azul';
+						if(p.color != 'red' && p.idr == datos.ro_id){
+							player.color = 'red';
+						} else if(p.color != 'green' && p.idr == datos.ro_id){
+							player.color = 'green';
+						} else if(p.color != 'yellow' && p.idr == datos.ro_id){
+							player.color = 'yellow';
+						} else if(p.color != 'blue' && p.idr == datos.ro_id){
+							player.color = 'blue';
 						}
 					});
 
@@ -219,9 +219,9 @@ io.on('connection',(socket)=>{
 			var num = players.indexOf(player);
 			if(player.pieza[npieza].pos < 52 && player.pieza[npieza].vueltaTabl == false){
 
-				if(player.color == 'rojo'){
+				if(player.color == 'red'){
 					player.pieza[npieza].pos += datos.pos;
-				} else if(player.color == 'verde'){
+				} else if(player.color == 'green'){
 
 					player.pieza[npieza].pos += datos.pos;
 
@@ -232,7 +232,7 @@ io.on('connection',(socket)=>{
 					}
 
 					
-				} else if(player.color == 'azul'){
+				} else if(player.color == 'blue'){
 
 					player.pieza[npieza].pos += datos.pos;
 
@@ -242,7 +242,7 @@ io.on('connection',(socket)=>{
 						players[num] = player;
 					}
 
-				} else if(player.color == 'amarillo'){
+				} else if(player.color == 'yellow'){
 
 					player.pieza[npieza].pos += datos.pos;
 
@@ -255,7 +255,7 @@ io.on('connection',(socket)=>{
 					
 				
 			} else if(player.pieza[npieza].pos >= 52 && player.pieza[npieza].vueltaTabl == false){
-				if(player.color == 'rojo'){
+				if(player.color == 'red'){
 
 					player.pieza[npieza].vueltaTabl = true;
 					player.pieza[npieza].pos = datos.pos;
@@ -276,14 +276,14 @@ io.on('connection',(socket)=>{
 					}
 
 					if(!player.pieza[npieza].llego){
-						if(player.color == "rojo"){
+						if(player.color == "red"){
 
 							player.pieza[npieza].pos = "red" + toString(pos);
-						} else if(player.color == "verde"){
+						} else if(player.color == "green"){
 							player.pieza[npieza].pos = "green" + toString(pos);
-						} else if(player.color == "azul"){
+						} else if(player.color == "blue"){
 							player.pieza[npieza].pos = "blue" + toString(pos);
-						} else if(player.color == "amarillo"){
+						} else if(player.color == "yellow"){
 							player.pieza[npieza].pos = "yellow" + toString(pos);
 						}
 					}
@@ -326,18 +326,18 @@ io.on('connection',(socket)=>{
 			var valor = 0;
 			
 			console.log(player.pieza.p1);
-			if(player.color == 'rojo'){
+			if(player.color == 'red'){
 
 				valor = 1;
 
-			} else if(player.color == 'verde'){
+			} else if(player.color == 'green'){
 				valor = 14;
 				
 			
-			} else if(player.color == 'amarillo'){
+			} else if(player.color == 'yellow'){
 				valor = 25;
 
-			} else if(player.color == 'azul'){
+			} else if(player.color == 'blue'){
 				valor = 40;
 			}
 
