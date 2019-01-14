@@ -211,9 +211,11 @@ io.on('connection',(socket)=>{
 	socket.on("nuevaPos", (datos,callback) => { //se recibe el nombre de la pieza y el resultado del dado
 		
 		var player = players.find((e) => e.ids == socket.id);
-		var npieza = parseInt(datos.pieza[3]) - 1;
+		
+		console.log(datos);
 
 		if(player !== undefined){
+			var npieza = parseInt(datos.pieza[3]) - 1;
 			var num = players.indexOf(player);
 			if(player.pieza[npieza].pos < 52 && player.pieza[npieza].vueltaTabl == false){
 
