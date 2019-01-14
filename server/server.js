@@ -197,7 +197,7 @@ io.on('connection',(socket)=>{
 					//console.log(players);
 
 					socket.join(toString(datos.ro_id));
-					socket.emit("actualizarListaUsuarios", JSON.stringify(player));
+					socket.emit("actualizarListaUsuarios", player);
 
 					callback();
 
@@ -214,7 +214,7 @@ io.on('connection',(socket)=>{
 		
 		console.log(datos);
 
-		if(player !== undefined){
+		if(player !== undefined && datos !== null){
 			var npieza = parseInt(datos.pieza[3]) - 1;
 			var num = players.indexOf(player);
 			if(player.pieza[npieza].pos < 52 && player.pieza[npieza].vueltaTabl == false){
