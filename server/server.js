@@ -197,7 +197,7 @@ io.on('connection',(socket)=>{
 					//console.log(players);
 
 					socket.join(toString(datos.ro_id));
-					socket.emit("actualizarListaUsuarios", player);
+					socket.broadcast.emit("actualizarListaUsuarios", player);
 
 					callback();
 
@@ -256,9 +256,9 @@ io.on('connection',(socket)=>{
 						player.pieza[npieza].pos = datos.pos;
 						players[num] = player;
 					}
-
+				}
 					
-			}	
+				
 		} else if(player.pieza[npieza].pos + datos.pos >= 52 && player.pieza[npieza].vueltaTabl == false){
 				if(player.color == 'red'){
 
@@ -294,7 +294,7 @@ io.on('connection',(socket)=>{
 					}
 					
 			}
-		}
+		
 
 		var oldPos = player.pieza[npieza].pos;
 		var newPos = player.pieza[npieza].pos + datos.pos;
@@ -318,7 +318,7 @@ io.on('connection',(socket)=>{
 
 		console.log(afuera);
 
-		socket.emit("ActualizarPos", afuera);
+		socket.broadcast.emit("ActualizarPos", afuera);
 
 		} else{
 			callback("El usuario no se encuentra en la sala");
@@ -392,7 +392,7 @@ io.on('connection',(socket)=>{
 
 			console.log(afuera);
 
-			socket.emit("ActualizarPos", afuera);
+			socket.broadcast.emit("ActualizarPos", afuera);
 		} else{
 			callback("Error");
 		}
