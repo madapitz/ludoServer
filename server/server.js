@@ -294,7 +294,7 @@ io.on('connection',(socket)=>{
 			players[num] = player;
 			
 			var afuera = {
-				pos: toString(player.pieza[npieza].pos),
+				pos: player.pieza[npieza].pos.toString(),
 				vueltaTabl: player.pieza[npieza].vueltaTabl,
 				nombref: player.pieza[npieza].nombref,
 				llego: player.pieza[npieza].llego,
@@ -325,7 +325,7 @@ io.on('connection',(socket)=>{
 			
 			var valor = 0;
 			
-			console.log(player.pieza.p1);
+			
 			if(player.color == 'red'){
 
 				valor = 1;
@@ -366,7 +366,7 @@ io.on('connection',(socket)=>{
 			console.log(valor);
 
 			var afuera = {
-				pos: toString(valor),
+				pos: valor.toString(),
 				vueltaTabl: false,
 				nombref: datos.pieza,
 				llego: false
