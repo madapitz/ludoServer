@@ -215,11 +215,20 @@ io.on('connection',(socket)=>{
 
 		datos.pos = parseInt(datos.pos);
 		console.log(datos.pos);
+		var oldPos = player.pieza[npieza].pos;
+		var newPos = player.pieza[npieza].pos + datos.pos;
+
+		var posArray = [];
+
+		for (var i = oldPos ; i <= newPos; i++) {
+			posArray.push(i);
+		}
+
 
 		if(player !== undefined && datos !== null){
 			var npieza = parseInt(datos.pieza[3]) - 1;
 			var num = players.indexOf(player);
-			if(player.pieza[npieza].pos < 52 && player.pieza[npieza].vueltaTabl == false){
+			if(player.pieza[npieza].pos + datos.pos < 52 && player.pieza[npieza].vueltaTabl == false){
 
 				if(player.color == 'red'){
 					player.pieza[npieza].pos += datos.pos;
@@ -256,7 +265,7 @@ io.on('connection',(socket)=>{
 
 					
 				
-		} else if(player.pieza[npieza].pos >= 52 && player.pieza[npieza].vueltaTabl == false){
+		} else if(player.pieza[npieza].pos + datos.pos >= 52 && player.pieza[npieza].vueltaTabl == false){
 				if(player.color == 'red'){
 
 					player.pieza[npieza].vueltaTabl = true;
@@ -300,7 +309,8 @@ io.on('connection',(socket)=>{
 			vueltaTabl: player.pieza[npieza].vueltaTabl,
 			nombref: player.pieza[npieza].nombref,
 			llego: player.pieza[npieza].llego,
-			dado: datos.pos
+			dado: datos.pos,
+			posArray: posArray
 		};
 
 		console.log(afuera);
