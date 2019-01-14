@@ -316,7 +316,7 @@ io.on('connection',(socket)=>{
 		
 		var player = players.find(e => e.ids == socket.id);
 		
-		
+		console.log(datos);
 		var npieza = parseInt(datos.pieza[3]) - 1;
 		
 		
@@ -363,6 +363,7 @@ io.on('connection',(socket)=>{
 
 			players[num] = player;
 			
+			console.log(valor);
 
 			var afuera = {
 				pos: toString(valor),
