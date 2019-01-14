@@ -384,7 +384,8 @@ io.on('connection',(socket)=>{
 				pos: valor.toString(),
 				vueltaTabl: false,
 				nombref: datos.pieza,
-				llego: false
+				llego: false,
+				posArray:[valor]
 			};
 
 			console.log(afuera);
