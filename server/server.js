@@ -172,26 +172,32 @@ io.on('connection',(socket)=>{
 							}
 						],
 						color:"",
-						gano: false
+						gano: false,
+						turno: 0 
 					};
 
 
 					if(players[0] == undefined){
 						player.color = 'red';
+						player.turno = 1;
+					} else {
+
+						players.forEach((p) => {
+							if(p.color != 'red' && p.idr == datos.ro_id){
+								player.color = 'red';
+								player.turno = 1;
+							} else if(p.color != 'green' && p.idr == datos.ro_id){
+								player.color = 'green';
+								player.turno = 2;
+							} else if(p.color != 'yellow' && p.idr == datos.ro_id){
+								player.color = 'yellow';
+								player.turno = 3;
+							} else if(p.color != 'blue' && p.idr == datos.ro_id){
+								player.color = 'blue';
+								player.turno = 4;
+							}
+						});
 					}
-
-					players.forEach((p) => {
-						if(p.color != 'red' && p.idr == datos.ro_id){
-							player.color = 'red';
-						} else if(p.color != 'green' && p.idr == datos.ro_id){
-							player.color = 'green';
-						} else if(p.color != 'yellow' && p.idr == datos.ro_id){
-							player.color = 'yellow';
-						} else if(p.color != 'blue' && p.idr == datos.ro_id){
-							player.color = 'blue';
-						}
-					});
-
 					console.log(player);
 					players.push(player);
 					//console.log(players);
@@ -206,6 +212,32 @@ io.on('connection',(socket)=>{
 			});
 		} else {
 			callback("Id de sala no valido");
+		}
+	});
+
+	socket.on("endTurn", (datos, callback) => {
+		var player = players.find((e) => e.ids == socket.id);
+		if(player !== undefined){
+			var num = players.indexOf(player);
+			var nextPlayers = players.filter((p) => p != player);
+			nextPlayers.forEach((p) => {
+				p.turno-=1;
+			});
+			player.turno = 4;
+			players[num] = player;
+
+			players.forEach((p) => {
+				nextPlayers.forEach((np) => {
+					if(p.ids === np.ids){
+						p = np;
+					}
+				});
+			});
+			
+			var nextPlayer = nextPlayers.find(e => e.turno === 1);
+			socket.emit("nextTurn", nextPlayer);
+			socket.broadcast.emit("nextTurn", nextPlayer);
+
 		}
 	});
 
