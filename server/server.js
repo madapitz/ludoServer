@@ -197,6 +197,7 @@ io.on('connection',(socket)=>{
 					//console.log(players);
 
 					socket.join(toString(datos.ro_id));
+					socket.emit("actualizarListaUsuarios", player);
 					socket.broadcast.emit("actualizarListaUsuarios", player);
 
 					callback();
@@ -318,6 +319,7 @@ io.on('connection',(socket)=>{
 
 		console.log(afuera);
 
+		socket.emit("ActualizarPos", afuera);
 		socket.broadcast.emit("ActualizarPos", afuera);
 
 		} else{
@@ -392,6 +394,7 @@ io.on('connection',(socket)=>{
 
 			console.log(afuera);
 
+			socket.emit("ActualizarPos", afuera);
 			socket.broadcast.emit("ActualizarPos", afuera);
 		} else{
 			callback("Error");
