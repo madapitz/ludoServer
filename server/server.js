@@ -212,7 +212,9 @@ io.on('connection',(socket)=>{
 		
 		var player = players.find((e) => e.ids == socket.id);
 		
-		console.log(datos);
+
+		datos.pos = parseInt(datos.pos);
+		console.log(datos.pos);
 
 		if(player !== undefined && datos !== null){
 			var npieza = parseInt(datos.pieza[3]) - 1;
@@ -254,7 +256,7 @@ io.on('connection',(socket)=>{
 
 					
 				
-			} else if(player.pieza[npieza].pos >= 52 && player.pieza[npieza].vueltaTabl == false){
+		} else if(player.pieza[npieza].pos >= 52 && player.pieza[npieza].vueltaTabl == false){
 				if(player.color == 'red'){
 
 					player.pieza[npieza].vueltaTabl = true;
@@ -266,7 +268,7 @@ io.on('connection',(socket)=>{
 					player.pieza[npieza].pos += datos.pos - 51;
 					players[num] = player;
 				} 
-			}  else if(player.pieza[npieza].vueltaTabl == true) {
+		}  else if(player.pieza[npieza].vueltaTabl == true) {
 					var pos = parseInt(player.pieza[npieza].pos) + datos.pos;
 
 					if(pos === 5){
@@ -291,17 +293,19 @@ io.on('connection',(socket)=>{
 			}
 		}
 			
-			players[num] = player;
-			
-			var afuera = {
-				pos: player.pieza[npieza].pos.toString(),
-				vueltaTabl: player.pieza[npieza].vueltaTabl,
-				nombref: player.pieza[npieza].nombref,
-				llego: player.pieza[npieza].llego,
-				dado: datos.pos
-			};
+		players[num] = player;
 
-			socket.emit("ActualizarPos", afuera);
+		var afuera = {
+			pos: player.pieza[npieza].pos.toString(),
+			vueltaTabl: player.pieza[npieza].vueltaTabl,
+			nombref: player.pieza[npieza].nombref,
+			llego: player.pieza[npieza].llego,
+			dado: datos.pos
+		};
+
+		console.log(afuera);
+
+		socket.emit("ActualizarPos", afuera);
 
 		} else{
 			callback("El usuario no se encuentra en la sala");
