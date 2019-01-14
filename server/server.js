@@ -212,6 +212,7 @@ io.on('connection',(socket)=>{
 		
 		var player = players.find((e) => e.ids == socket.id);
 		
+		var npieza = parseInt(datos.pieza[3]) - 1;
 
 		datos.pos = parseInt(datos.pos);
 		console.log(datos.pos);
@@ -226,7 +227,7 @@ io.on('connection',(socket)=>{
 
 
 		if(player !== undefined && datos !== null){
-			var npieza = parseInt(datos.pieza[3]) - 1;
+			
 			var num = players.indexOf(player);
 			if(player.pieza[npieza].pos + datos.pos < 52 && player.pieza[npieza].vueltaTabl == false){
 
