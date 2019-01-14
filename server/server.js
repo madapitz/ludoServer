@@ -53,6 +53,10 @@ const pool = new Pool({
 
 var room_list = [];
 var players = [];
+var red = false;
+var blue = false;
+var green = false;
+var yellow = false;
 
 
 pool.query('SELECT ro_name FROM room', (err, res) => {
@@ -85,8 +89,11 @@ io.on('connection',(socket)=>{
 			var values = [datos.nombre, datos.password]; 
 
 			pool.query(text, values, (err, res) => {
+				console.log(err);
 			  if (err) {
-			    callback('El nombre de usuario ya esta en uso');
+				  console.log('Nombre o contrasena incorrecta');
+				socket.emit('errorLogin', 'Nombre o contrasena incorrecta');
+			    // callback('El nombre de usuario ya esta en uso');
 			  } else {
 			  	var redir = {
 			  		dirc:"/partidas.html" //quitar
@@ -96,6 +103,7 @@ io.on('connection',(socket)=>{
 			  }
 			});
 		} else{
+			socket.emit('errorLogin', 'No puede haber campos vacios');
 			callback('No puede haber campos vacios.');
 		}
 	});
@@ -106,9 +114,12 @@ io.on('connection',(socket)=>{
 		if (datos.nombre !== "" && datos.password !== "") {
 			var values = [datos.nombre, datos.password]; 
 			pool.query(text, values, (err, res) => {
+				console.log(res);
 				if (res.rows[0] == undefined) {
-			    callback('Nombre de usuario o contrasena incorrecta');
+					socket.emit('errorLogin', 'Nombre o contrasena incorrecta');
+			    	callback('Nombre de usuario o contrasena incorrecta');
 			  } else {
+				socket.emit('errorLogin', 'login exitoso');
 			  	var redir = { //Quitar cuando se pruebe para el juego
 			  		dirc:"/partidas.html"
 			  	};
@@ -117,9 +128,12 @@ io.on('connection',(socket)=>{
 			    //socket.emit('redirect',redir);
 			  }
 			});
+			
 		} else{
+			socket.emit('errorLogin', 'No puede haber campos vacios');
 			callback('No puede haber campos vacios.');
 		}
+		
 	});
 
 	socket.on("entrarSala", (datos, callback) => { //se debe pasar el id de la sala
@@ -176,33 +190,31 @@ io.on('connection',(socket)=>{
 						turno: 0 
 					};
 
-
-					if(players[0] == undefined){
-						player.color = 'red';
-						player.turno = 1;
-					} else {
-
-						players.forEach((p) => {
-							if(p.color != 'red' && p.idr == datos.ro_id){
+					
+							if(red == false){
 								player.color = 'red';
 								player.turno = 1;
-							} else if(p.color != 'green' && p.idr == datos.ro_id){
+								red = true;
+							} else if(green == false){
 								player.color = 'green';
 								player.turno = 2;
-							} else if(p.color != 'yellow' && p.idr == datos.ro_id){
+								green = true;
+							} else if(yellow == false){
 								player.color = 'yellow';
 								player.turno = 3;
-							} else if(p.color != 'blue' && p.idr == datos.ro_id){
+								yellow = true;
+							} else if(blue == false ){
 								player.color = 'blue';
 								player.turno = 4;
+								blue = true;
 							}
-						});
-					}
+
+					
 					console.log(player);
 					players.push(player);
 					//console.log(players);
 
-					socket.join(toString(datos.ro_id));
+					//socket.join(toString(datos.ro_id));
 					socket.emit("actualizarListaUsuarios", player);
 					//socket.broadcast.emit("actualizarListaUsuarios", player);
 
@@ -346,7 +358,8 @@ io.on('connection',(socket)=>{
 			nombref: player.pieza[npieza].nombref,
 			llego: player.pieza[npieza].llego,
 			dado: datos.pos,
-			posArray: posArray
+			posArray: posArray,
+			color: player.color
 		};
 
 		console.log(afuera);
@@ -421,7 +434,8 @@ io.on('connection',(socket)=>{
 				vueltaTabl: false,
 				nombref: datos.pieza,
 				llego: false,
-				posArray:[valor]
+				posArray:[valor],
+				color: player.color
 			};
 
 			console.log(afuera);
